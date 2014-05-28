@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.sep.gameobjects;
 
 import java.awt.Graphics2D;
@@ -33,6 +28,7 @@ public class Player extends GameObject {
     private Animation runningLeft, runningRight;
     private Animation standing;
     private Animation jumpingLeft, jumpingRight;
+    private Animation duck;
 
     private boolean isJumping = false;
 
@@ -80,6 +76,9 @@ public class Player extends GameObject {
         } else if (game.getInput().isKeyDown(Input.KeyCode.LEFT)) {
             current = walkingLeft;
             this.vx = -WALKING_SPEED;
+        } else if (game.getInput().isKeyDown(Input.KeyCode.DOWN)) {
+            current = duck;
+            this.vx = 0.0f;
         } else {
             vx = 0.0f;
             current = standing;
@@ -126,6 +125,7 @@ public class Player extends GameObject {
         standing = new Animation();
         jumpingLeft = new Animation();
         jumpingRight = new Animation();
+        duck = new Animation();
 
         walkingRight.addFrame(new Sprite(playerImage, 1, 257, 78, 126), 0.2);
         walkingRight.addFrame(new Sprite(playerImage, 81, 257, 78, 126), 0.2);
@@ -155,6 +155,8 @@ public class Player extends GameObject {
 
         jumpingRight.addFrame(new Sprite(playerImage, 1, 389, 78, 126), 1.0);
         jumpingLeft.addFrame(new Sprite(playerImage, 81, 389, 78, 126), 1.0);
+        
+        duck.addFrame(new Sprite(playerImage, 161, 389, 78, 126), 1.0);
 
         current = standing;
 

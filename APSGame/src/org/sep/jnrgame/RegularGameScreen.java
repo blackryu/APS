@@ -2,15 +2,8 @@ package org.sep.jnrgame;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.InputStream;
-import javax.imageio.ImageIO;
-import org.sep.drawable.Animation;
-import org.sep.drawable.Sprite;
 import org.sep.framework.Framework;
 import org.sep.framework.Game;
-import org.sep.framework.Input;
 import org.sep.framework.Screen;
 import org.sep.gameobjects.Player;
 
