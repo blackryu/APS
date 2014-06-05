@@ -5,24 +5,23 @@ import org.sep.framework.Game;
 import org.sep.framework.Screen;
 
 
-
 public class JumpNRun extends Game {
 
-    @Override
-    public String getName() {
-        return "Jump 'n Run";
-    }
-  
-    public static void main(String []argv) {
-        Game game = new JumpNRun();
-        
-        Framework.getInstance().setGame(game);
-        
-        Framework.getInstance().start();
-    }
+	public static void main(String[] argv) {
+		Game game = new JumpNRun();
 
-    @Override
-    public Screen getStartScreen() {
-        return new StartScreen();
-    }
+		Framework.getInstance().setGame(game);
+
+		Framework.getInstance().start();
+	}
+
+	@Override
+	public String getName() {
+		return "Jump 'n Run";
+	}
+
+	@Override
+	public Screen getStartScreen() {
+		return new StartScreen();
+	}
 }

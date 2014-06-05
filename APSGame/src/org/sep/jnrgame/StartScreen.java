@@ -12,6 +12,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import javax.imageio.ImageIO;
+
 import org.sep.drawable.Sprite;
 
 import org.sep.framework.Framework;
@@ -20,134 +21,143 @@ import org.sep.framework.Input;
 import org.sep.framework.Screen;
 
 /**
- *
  * @author davidma
  */
 public class StartScreen implements Screen {
 
-    Sprite sprite;
+	Sprite sprite;
 
-    Font menuFont;
-    Font selectionFont;
-    Font titleFont;
+	Font menuFont;
+	Font selectionFont;
+	Font titleFont;
 
-    int x, y;
-    int menuY = 400;
+	int x, y;
+	int menuY = 400;
 
-    int selection = 0;
+	int selection = 0;
 
-    Game game;
+	Game game;
 
-    @Override
-    public void initialize() {
-        x = 100;
-        y = 100;
+	boolean enterPressed;
+	boolean pressedUp = false;
+	boolean pressedDown = false;
 
-        InputStream is = this.getClass().getResourceAsStream("/org/sep/res/batman.jpg");
-        try {
-            BufferedImage background = ImageIO.read(is);
-            sprite = new Sprite(background);
-            
-        } catch (IOException ex) {
-            System.out.println("Could not load resource " + ex.getMessage());
-        }
+	@Override
+	public void initialize() {
+		enterPressed = true;
 
-        game = Framework.getInstance().getGame();
+		x = 100;
+		y = 100;
 
-        menuFont = new Font("Arial", Font.PLAIN, 32);
-        selectionFont = new Font("Arial", Font.BOLD, 32);
-        titleFont = new Font("Arial", Font.BOLD, 64);
-    }
-    
-    boolean pressedUp = false;
-    boolean pressedDown = false;
+		InputStream is = this.getClass().getResourceAsStream("/org/sep/res/batman.jpg");
+		try {
+			BufferedImage background = ImageIO.read(is);
+			sprite = new Sprite(background);
 
-    @Override
-    public void update(float deltaTime) {
+		} catch (IOException ex) {
+			System.out.println("Could not load resource " + ex.getMessage());
+		}
 
-        if (game.getInput().isKeyDown(Input.KeyCode.UP) && !pressedUp) {
-            selection--;
-            pressedUp = true;
-        } else if (game.getInput().isKeyDown(Input.KeyCode.DOWN) && !pressedDown) {
-            selection++;
-            pressedDown = true;
-        } else if (game.getInput().isKeyDown(Input.KeyCode.ENTER)) {
-            select();
-        }
-        
-        if (!game.getInput().isKeyDown(Input.KeyCode.UP))
-            pressedUp = false;
-        
-        if (!game.getInput().isKeyDown(Input.KeyCode.DOWN))
-            pressedDown = false;
+		game = Framework.getInstance().getGame();
 
-        if (selection < 0) {
-            selection = 0;
-        } else if (selection > 3) {
-            selection = 3;
-        }
-    }
+		menuFont = new Font("Arial", Font.PLAIN, 32);
+		selectionFont = new Font("Arial", Font.BOLD, 32);
+		titleFont = new Font("Arial", Font.BOLD, 64);
+	}
 
-    @Override
-    public void draw() {
-        Graphics2D g = game.getWindow().getGraphicsContext();
+	@Override
+	public void update(float deltaTime) {
 
-        g.setColor(Color.black);
+		if (game.getInput().isKeyDown(Input.KeyCode.ENTER) && !enterPressed) {
+			select();
+		} else if (!game.getInput().isKeyDown(Input.KeyCode.ENTER)) {
+			enterPressed = false;
+		}
 
-        g.fillRect(0, 0, game.getWindow().getWidth(), game.getWindow().getHeight());
 
-        sprite.draw(g);
-        
-        g.setColor(Color.RED);
-        g.setFont(titleFont);
-        g.drawString(game.getName(), 50, 80);
+		if (game.getInput().isKeyDown(Input.KeyCode.UP) && !pressedUp) {
+			selection--;
+			pressedUp = true;
+		} else if (game.getInput().isKeyDown(Input.KeyCode.DOWN) && !pressedDown) {
+			selection++;
+			pressedDown = true;
+		}
 
-        //g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-        g.setColor(Color.RED);
-        g.setFont(menuFont);
-        if (selection == 0) {
-            g.setColor(Color.WHITE);
-            g.setFont(selectionFont);
-        }
-        g.drawString("Reguläres Spiel", 50, menuY);
+		if (!game.getInput().isKeyDown(Input.KeyCode.UP))
+			pressedUp = false;
 
-        g.setColor(Color.RED);
-        g.setFont(menuFont);
-        if (selection == 1) {
-            g.setColor(Color.WHITE);
-            g.setFont(selectionFont);
-        }
-        g.drawString("Endlos Spiel", 50, menuY + 60);
+		if (!game.getInput().isKeyDown(Input.KeyCode.DOWN))
+			pressedDown = false;
 
-        g.setColor(Color.RED);
-        g.setFont(menuFont);
-        if (selection == 2) {
-            g.setColor(Color.WHITE);
-            g.setFont(selectionFont);
-        }
-        g.drawString("Highscore", 50, menuY + 120);
+		if (selection < 0) {
+			selection = 0;
+		} else if (selection > 3) {
+			selection = 3;
+		}
+	}
 
-        g.setColor(Color.RED);
-        g.setFont(menuFont);
-        if (selection == 3) {
-            g.setColor(Color.WHITE);
-            g.setFont(selectionFont);
-        }
-        g.drawString("Exit", 50, menuY + 180);
+	@Override
+	public void draw() {
+		Graphics2D g = game.getWindow().getGraphicsContext();
 
-        game.getWindow().swapBuffer();
-    }
+		g.setColor(Color.black);
 
-    @Override
-    public void dispose() {
+		g.fillRect(0, 0, game.getWindow().getWidth(), game.getWindow().getHeight());
 
-    }
+		sprite.draw(g);
 
-    private void select() {
-        if (selection == 3) {
-            game.quit();
-        } else if (selection == 0) {
-            game.setScreen(new RegularGameScreen());
-        }
-    }
+		g.setColor(Color.RED);
+		g.setFont(titleFont);
+		g.drawString(game.getName(), 50, 80);
+
+		//g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+		g.setColor(Color.RED);
+		g.setFont(menuFont);
+		if (selection == 0) {
+			g.setColor(Color.WHITE);
+			g.setFont(selectionFont);
+		}
+		g.drawString("Reguläres Spiel", 50, menuY);
+
+		g.setColor(Color.RED);
+		g.setFont(menuFont);
+		if (selection == 1) {
+			g.setColor(Color.WHITE);
+			g.setFont(selectionFont);
+		}
+		g.drawString("Endlos Spiel", 50, menuY + 60);
+
+		g.setColor(Color.RED);
+		g.setFont(menuFont);
+		if (selection == 2) {
+			g.setColor(Color.WHITE);
+			g.setFont(selectionFont);
+		}
+		g.drawString("Highscore", 50, menuY + 120);
+
+		g.setColor(Color.RED);
+		g.setFont(menuFont);
+		if (selection == 3) {
+			g.setColor(Color.WHITE);
+			g.setFont(selectionFont);
+		}
+		g.drawString("Exit", 50, menuY + 180);
+
+		game.getWindow().swapBuffer();
+	}
+
+	@Override
+	public void dispose() {
+
+	}
+
+	private void select() {
+		if (selection == 3) {
+			game.quit();
+		} else if (selection == 0) {
+			game.setScreen(new RegularGameScreen());
+		} else if (selection == 2) {
+			game.setScreen(new HighScore());
+		}
+	}
 }
