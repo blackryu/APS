@@ -7,43 +7,42 @@
 package org.sep.jnrgame;
 
 /**
- *
  * @author N.Bausch
  */
-public class Score implements Comparable<Score>{
-    
-    private String name;
-    private int highscore;
+public class Score implements Comparable<Score> {
 
-    public Score(String name, int highscore) {
-        this.name = name;
-        this.highscore = highscore;
-    }
+	private String name;
+	private int highscore;
 
-    public String getName() {
-        return name;
-    }
+	public Score(String name, int highscore) {
+		this.name = name;
+		this.highscore = highscore;
+	}
 
-    public int getHighscore() {
-        return highscore;
-    }
+	public String getName() {
+		return name;
+	}
 
-    @Override
-    public String toString() {
-        return name + "    :" + highscore;
-    }
+	public int getHighscore() {
+		return highscore;
+	}
 
-    @Override
-    public int compareTo(Score o) {
-    
-        if(highscore > o.getHighscore()){
-            return -1;
-        }else if(highscore == o.getHighscore()){
-            return 0;
-        }else{
-            return 1;
-        }
-    }
-    
-    
+	@Override
+	public String toString() {
+		return name + "    :" + highscore;
+	}
+
+	@Override
+	public int compareTo(Score o) {
+
+		if (highscore > o.getHighscore()) {
+			return -1;
+		} else if (highscore == o.getHighscore()) {
+			return 0;
+		} else {
+			return 1;
+		}
+	}
+
+
 }
