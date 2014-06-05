@@ -1,5 +1,11 @@
 package org.sep.framework;
 
+/**
+ * A screen is a section of a game like a menu or the actual game.
+ * Only one screen can be current to a game.
+ * 
+ * @author David Marquant
+ */
 public interface Screen {
     
     /**

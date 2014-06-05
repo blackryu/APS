@@ -1,19 +1,20 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package org.sep.drawable;
 
 import java.awt.Graphics2D;
 
 /**
- *
- * @author davidma
+ * Any component of a game that needs to be rendered during an iteration
+ * should implement this interface.
+ * 
+ * @author David Marquant
  */
 public interface Drawable {
     
+    /**
+     * Renders this Drawable.
+     * 
+     * @param g an AWT Graphics Context to render this drawable 
+     */
     public void draw(Graphics2D g);
     
 }

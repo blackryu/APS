@@ -7,11 +7,18 @@
 package org.sep.framework;
 
 /**
- *
- * @author davidma
+ * This interface should be implemented by classes that need to be updated
+ * each iteration.
+ * 
+ * @author David Marquant
  */
 public interface Updateable {
     
+    /**
+     * Update the game logic here.
+     * 
+     * @param deltaTime time that has passed since last iteration in seconds
+     */
     public void update(float deltaTime);
     
 }
